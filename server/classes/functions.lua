@@ -29,6 +29,7 @@ loadMafias = function()
     MySQL.Async.fetchAll("SELECT * FROM mafia", {}, function(result) 
         for k,v in pairs(result) do
             Mafia[v.name] = { boss = v.boss, reputation = v.reputation, money = v.money, createdon = v.createdOn }
+
         end
     end)
 end

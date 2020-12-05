@@ -19,6 +19,19 @@ server_scripts {
     'server/classes/functions.lua'
 }
 
+server_exports {
+    "addMafiaReputation",
+    "getMafiaReputation",
+    "addMafiaMember",
+    "removeMafiaMember",
+    "addMafiaMoney",
+    "getMafiaMoney",
+    "getMafiaCreated",
+    "getMafiaBoss",
+    "getMafiaByName",
+    
+}
+
 ui_page 'html/ui.html'
 
 files {
