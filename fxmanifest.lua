@@ -16,7 +16,7 @@ server_scripts {
     '@async/async.lua',
     '@mysql-async/lib/MySQL.lua',
     'server/main.lua',
-    'server/classes/mafia.lua'
+    'server/classes/functions.lua'
 }
 
 ui_page 'html/ui.html'
