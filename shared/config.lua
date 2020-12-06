@@ -1,13 +1,13 @@
 Config = {}
 
 
---[[Menu]]
+--[[WEAPONS]]
 Config.Weapons = {
-    {hash = "weapon_pistol",  name = "Pistol", price = "5.000", reputation = 0},
-    {hash = "weapon_pistol_mk2",  name = "Pistol MK4", price = "5.000", reputation = 0},
-    {hash = "weapon_combatpistol", name = "Combat Pistol",  price = "5.000", reputation = 0},
-    {hash = "weapon_revolver", name = "Revolver",  price = "5.000", reputation = 0},
-    {hash = "weapon_microsmg", name = "Micro SMG",  price = "5.000", reputation = 0},
+    {hash = "weapon_pistol",  name = "Pistol", price = "5000", reputation = 0},
+    {hash = "weapon_pistol_mk2",  name = "Pistol MK4", price = "5000", reputation = 0},
+    {hash = "weapon_combatpistol", name = "Combat Pistol",  price = "5000", reputation = 0},
+    {hash = "weapon_revolver", name = "Revolver",  price = "5000", reputation = 0},
+    {hash = "weapon_microsmg", name = "Micro SMG",  price = "5000", reputation = 0},
     {hash = "weapon_smg", name = "SMG",  price = "10", reputation = 5},
     {hash = "weapon_smg_mk2", name = "SMG MK2",  price = "10", reputation = 5},
     {hash = "weapon_minismg", name = "Mini SMG",  price = "10", reputation = 5},
@@ -22,6 +22,23 @@ Config.Weapons = {
     {hash = "weapon_bzgas", name = "BZ Gas",  price = "10", reputation = 35},
     {hash = "weapon_molotov", name = "Molotov",  price = "10", reputation = 35},
     {hash = "weapon_stickybomb", name = "StickyBomb",  price = "10", reputation = 35},
+}
+
+--[[CRAFT]]
+
+Config.Craft = {
+    {item = "BulletProof Vest", hash = "bulletproof", price = "5000", reputation = 0},
+    {item = "Bread", hash = "bread", price = "5000", reputation = 0},
+    {item = "Water", hash = "water", price = "5000", reputation = 0},
+    {item = "Oxy", hash = "oxy", price = "5000", reputation = 10},
+    {item = "Weed", hash = "weed", price = "5000", reputation = 10},
+    {item = "Cocaine", hash = "cocaine", price = "5000", reputation = 10},
+    {item = "Crack", hash = "crack", price = "5000", reputation = 20},
+    {item = "Pistol Ammo", hash = "ammo_pistol", price = "5000", reputation = 20},
+    {item = "Rifle Ammo", hash = "ammo_rifle", price = "5000", reputation = 20},
+    {item = "Sniper Ammo", hash = "ammo_sniper", price = "5000", reputation = 30},
+
+
 }
 
 --[[PED]]
