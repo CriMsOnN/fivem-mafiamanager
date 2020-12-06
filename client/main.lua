@@ -16,6 +16,7 @@ Citizen.CreateThread(function()
 
 end)
 
+
 RegisterNetEvent("mafiamanager:client:updateMafia")
 AddEventHandler("mafiamanager:client:updateMafia", function(playerData) 
     if playerData ~= nil then
@@ -25,7 +26,8 @@ AddEventHandler("mafiamanager:client:updateMafia", function(playerData)
     end
 end)
 
-RegisterCommand("menu", function() 
+RegisterCommand("menu", function()
+    exports["cm_notify"]:SendAlert("success", "Successfully opened menu", 5000);
     openMenu()
 end)
 

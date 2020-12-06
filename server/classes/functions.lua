@@ -66,6 +66,7 @@ end
 
 addMafiaReputation = function(name, reputation)
     Mafia[name].reputation = Mafia[name].reputation + reputation
+    TriggerClientEvent("mafiamanager:client:updateMafia", source, MafiaData)
 end
 
 getMafiaReputation = function(name)

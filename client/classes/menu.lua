@@ -6,7 +6,7 @@ openMenu = function()
     }
 
     ESX.UI.Menu.Open("default", GetCurrentResourceName(), 'weapons', {
-        title = "🕵️"..MafiaData.mafia .. ' / Reputation: ' ..MafiaData.mafia_reputation,
+        title = MafiaData.mafia .. " / Reputation: " ..MafiaData.mafia_reputation,
         align = "bottom",
         elements = elements,
     }, function(data, menu) 
@@ -21,18 +21,16 @@ openMenu = function()
 end
 
 open_weapons = function()
-    local elements = {
-        { label = "AK47", value = "weapon_ak47"},
-        { label = "Carbine Rifle", value = "weapon_carbine_rifle"}
-    }
+    local elements = {}
 
-    if MafiaData.mafia_reputation >= 0 then
-        table.insert(elements, { label = "SMS", value = "SMG" })
-        table.insert(elements, {label = "SLS", value = "SLS" })
-    end
+    for k,v in pairs(Config.Weapons) do
+        if v.reputation > MafiaData.mafia_reputation then
+            table.insert(elements, {label = "<span style='color:gray; float: left; font-weight: bold;'>🔒 " ..v.name .."</span>", value = v.hash})
+        end
 
-    if MafiaData.mafia_reputation >= 0 then
-        table.insert(elements, { label = "other", value = "other"})
+        if v.reputation <= MafiaData.mafia_reputation then
+            table.insert(elements, {label = "<span style='float: left; font-weight: bold;'>"..v.name .."</span>" .. "&nbsp;&nbsp;&nbsp;&nbsp;<span style='float: right; font-weight: bold;  color:RGBA(0,255,87,0.4); text-shadow: 0px 0px 5px #000'>💲"..v.price.."</span>", value = v.hash})
+        end
     end
     ESX.UI.Menu.CloseAll()
 
@@ -47,7 +45,7 @@ open_weapons = function()
             end
         end
     end, function(data, menu)
-        menu.close()
+        openMenu()
     end)
 
 end

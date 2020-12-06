@@ -9,3 +9,8 @@ AddEventHandler("mafiamanager:server:playerJoined", function()
     getMafiaPlayerData(_source, xPlayer.getIdentifier())
 end)
 
+
+RegisterServerEvent("mafiamanager:server:addReputation")
+AddEventHandler("mafiamanager:server:addReputation", function(name, reputation)
+    addMafiaReputation(name, reputation)
+end)

@@ -9,7 +9,10 @@ version '1.0.0'
 client_scripts {
     'shared/config.lua',
     'client/main.lua',
-    'client/menu.lua'
+    'client//classes/menu.lua',
+    'client/classes/functions.lua',
+    'client/classes/ped.lua',
+    'client/classes/missions.lua'
 }
 
 server_scripts {
@@ -18,6 +21,10 @@ server_scripts {
     '@mysql-async/lib/MySQL.lua',
     'server/main.lua',
     'server/classes/functions.lua'
+}
+
+exports {
+    "getMafiaData",
 }
 
 server_exports {
