@@ -81,6 +81,42 @@ getMafiaByName = function(name)
 end
 
 
+getMafiaPlayerData = function(source, identifier)
+    MySQL.Async.fetchAll("SELECT mafia, mafia_grade FROM `users` WHERE identifier = @identifier", {
+        ["identifier"] = identifier
+    }, function(result) 
+        if result[1] ~= nil then
+            local MafiaData = {
+                mafia = result[1].mafia,
+                mafia_grade = result[1].mafia_grade,
+                mafia_reputation = Mafia[result[1].mafia].reputation,
+                mafia_money = Mafia[result[1].mafia].money,
+            }
+            TriggerClientEvent("mafiamanager:client:updateMafia", source, MafiaData)
+        else
+            return false
+        end
+    end)
+end
+
+getMafiaByPlayer = function(identifier)
+    MySQL.Async.fetchAll("SELECT mafia, mafia_grade FROM `users` WHERE identifier = @identifier", {
+        ["identifier"] = identifier
+    }, function(result) 
+        if result[1] ~= nil then
+            local mafia = {
+                mafia = result[1].mafia,
+                mafia_grade = result[1].mafia_grade
+            }
+            return mafia
+        else
+            return false
+        end
+    end)
+end
+
+--DEBUG TOOL
+
 function dump(o)
     if type(o) == 'table' then
         local s = '{ '

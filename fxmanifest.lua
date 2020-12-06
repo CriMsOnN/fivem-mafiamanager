@@ -8,7 +8,8 @@ version '1.0.0'
 
 client_scripts {
     'shared/config.lua',
-    'client/main.lua'
+    'client/main.lua',
+    'client/menu.lua'
 }
 
 server_scripts {
@@ -29,7 +30,8 @@ server_exports {
     "getMafiaCreated",
     "getMafiaBoss",
     "getMafiaByName",
-    
+    "getMafiaPlayerData",
+    "getMafiaByPlayer"
 }
 
 ui_page 'html/ui.html'
