@@ -1,6 +1,4 @@
 ESX = nil
-
-local playerLoaded = false
 local PlayerData = {}
 MafiaData = {}
 
@@ -17,17 +15,6 @@ Citizen.CreateThread(function()
     TriggerServerEvent("mafiamanager:server:playerJoined")
 
 end)
-
-Citizen.CreateThread(function()
-    while not playerLoaded do
-        Citizen.Wait(0)
-        if NetworkIsPlayerActive(PlayerId()) then
-            TriggerServerEvent('mafiamanager:server:playerJoined')
-            playerLoaded = true
-        end
-    end
-end)
-
 
 RegisterNetEvent("mafiamanager:client:updateMafia")
 AddEventHandler("mafiamanager:client:updateMafia", function(playerData) 
