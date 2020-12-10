@@ -53,3 +53,10 @@ AddEventHandler("mafiamanager:server:craftItem", function(item, price)
         TriggerClientEvent("cm_notify:client:SendAlert", _source, {type = "error", text="You dont have enough cash"}, 5000)
     end
 end)
+
+AddEventHandler("playerDropped", function() 
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local identifier = xPlayer.getIdentifier()
+    updateDroppedPlayer(identifier)
+end)

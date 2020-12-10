@@ -13,6 +13,7 @@ createMafia = function(name, identifier)
             ["reputation"] = 0,
             ["boss"] = identifier,
             ["money"] = 0,
+            ["level"] = 1,
             ["createdOn"] = timeT["day"] .. "/" .. timeT["month"] .. "/" .. timeT["year"] .. " - ".. timeT["hour"] .. ":" .. timeT["min"] 
         }, function(result)
             MySQL.Async.execute("UPDATE users SET mafia = @mafia, mafia_grade = @grade WHERE identifier = @identifier", {
@@ -20,7 +21,7 @@ createMafia = function(name, identifier)
                 ["grade"] = "Boss",
                 ["identifier"] = identifier
             })
-            Mafia[name] = { reputation = 0, boss = identifier, money = 0,  createdon = timeT["day"] .. "/" .. "/" .. timeT["month"] .. "/" .. timeT["year"] .. "-".. timeT["hour"] .. ":" .. timeT["min"] }
+            Mafia[name] = { reputation = 0, boss = identifier, money = 0, level = 1,  createdon = timeT["day"] .. "/" .. "/" .. timeT["month"] .. "/" .. timeT["year"] .. "-".. timeT["hour"] .. ":" .. timeT["min"] }
         end)
     end)
 end
@@ -28,7 +29,7 @@ end
 loadMafias = function()
     MySQL.Async.fetchAll("SELECT * FROM mafia", {}, function(result) 
         for k,v in pairs(result) do
-            Mafia[v.name] = { boss = v.boss, reputation = v.reputation, money = v.money, createdon = v.createdOn }
+            Mafia[v.name] = { boss = v.boss, reputation = v.reputation, level = v.level, money = v.money, createdon = v.createdOn }
 
         end
     end)
@@ -52,6 +53,15 @@ removeMafiaMember = function(identifier)
     })
 end
 
+
+getMafiaLevel = function(name)
+    return Mafia[name].level
+end
+
+addMafiaLevel = function(name)
+    Mafia[name].level = Mafia[name].level + 1
+end
+
 addMafiaMoney = function(name, money)
     Mafia[name].money = Mafia[name].money + money
 end
@@ -65,9 +75,19 @@ getMafiaCreated = function(name)
 end
 
 addMafiaReputation = function(name, reputation)
-    Mafia[name].reputation = Mafia[name].reputation + reputation
-    TriggerClientEvent("mafiamanager:client:updateMafia", source, MafiaData)
+    local newReputation = Mafia[name].reputation + reputation
+    local mafiaLevel = Mafia[name].level
+    if newReputation >= Config.level[mafiaLevel].xp then
+        Mafia[name].level = Mafia[name].level + 1
+        Mafia[name].reputation = newReputation - Config.level[mafiaLevel].xp
+    else
+        Mafia[name].reputation = newReputation
+    end
 end
+
+RegisterCommand("test1", function(source, args, raw) 
+    addMafiaReputation(tostring(args[1]), tonumber(args[2]))
+end)
 
 getMafiaReputation = function(name)
     return Mafia[name].reputation
@@ -101,21 +121,54 @@ getMafiaPlayerData = function(source, identifier)
 end
 
 getMafiaByPlayer = function(identifier)
-    MySQL.Async.fetchAll("SELECT mafia, mafia_grade FROM `users` WHERE identifier = @identifier", {
+    local mafia = {}
+    MySQL.ready(function() 
+        MySQL.Async.fetchAll("SELECT mafia, mafia_grade FROM `users` WHERE identifier = @identifier", {
+        ["identifier"] = identifier
+        }, function(result) 
+            mafia = result[1].mafia
+        end)
+        return mafia
+    end)
+end
+
+updateDroppedPlayer = function(identifier)
+    MySQL.Async.fetchAll("SELECT mafia FROM `users` WHERE identifier = @identifier", {
         ["identifier"] = identifier
     }, function(result) 
         if result[1] ~= nil then
-            local mafia = {
-                mafia = result[1].mafia,
-                mafia_grade = result[1].mafia_grade
-            }
-            return mafia
+            local name = tostring(result[1].mafia)
+            MySQL.Async.execute("UPDATE mafia SET reputation = @reputation, money = @money, level = @level WHERE name = @mafia", {
+                ["reputation"] = Mafia[name].reputation,
+                ["money"] = Mafia[name].money,
+                ["level"] = Mafia[name].level,
+                ["mafia"] = name
+            }, function(rows) 
+                if rows == 0 then return end
+            end)
         else
-            return false
+            return
         end
     end)
 end
 
+-- RegisterCommand("getm", function(source, args, raw) 
+--     local xPlayer = ESX.GetPlayerFromId(source)
+--     local identifier = xPlayer.getIdentifier()
+--     updateDroppedPlayer(identifier)
+-- end)
+
+
+updateMafia = function(name) 
+    MySQL.Async.execute("UPDATE mafia SET reputation = @reputation, money = @money, level = @level WHERE name = @mafia ", {
+        ["reputation"] = Mafia[name].reputation,
+        ["money"] = Mafia[name].money,
+        ["level"] = Mafia[name].level,
+        ["name"] = name
+    }, function(result) 
+        print(name.." Updated successfully")
+    end)
+end
 --DEBUG TOOL
 
 function dump(o)

@@ -51,3 +51,27 @@ Config.Ped = {
 
 Config.Ped.Model = "mp_m_bogdangoon"
 
+
+--[[XP AND LVLUP]]
+
+Config.level = {
+    [1] = {
+        xp = 1000,
+    },
+    [2] = {
+        xp = 2000,
+    },
+    [3] = {
+        xp = 3000,
+    },
+    [4] = {
+        xp = 4000,
+    },
+    [5] = {
+        xp = 5000,
+    },
+    [6] = {
+        xp = 6000,
+    },
+
+}
